@@ -15,16 +15,45 @@ class _CalculadoraState extends State<Calculadora> {
   double num1 = 0;
   String operador = "";
 
-
   void manejarBoton(String valor) {
     if (valor == "C") {
-      // limpiar
-    } else if (valor == "=" ) {
-      // calcular
+      setState(() {
+        display = "";
+        num1 = 0;
+        operador = "";
+        controller.text = "";
+      });
+    } else if (valor == "=") {
+      List<String> partes = display.split(operador);
+      double num2 = double.parse(partes[1]);
+      double resultado = 0;
+      
+      if (operador == "+")
+        resultado = num1 + num2;
+      else if (operador == "-")
+        resultado = num1 - num2;
+      else if (operador == "*")
+        resultado = num1 * num2;
+      else if (operador == "/")
+        resultado = num1 / num2;
+
+      setState(() {
+        display = resultado.toString();
+        controller.text = display;
+        operador = "";
+      });
     } else if (valor == "+" || valor == "-" || valor == "*" || valor == "/") {
-      // guardar operador
+      setState(() {
+        num1 = double.parse(display);
+        operador = valor;
+        display += valor;
+        controller.text = display;
+      });
     } else {
-      // es un número, mostrarlo en pantalla
+      setState(() {
+        display += valor;
+        controller.text = display;
+      });
     }
   }
 
@@ -57,49 +86,81 @@ class _CalculadoraState extends State<Calculadora> {
             SizedBox(height: 16),
             Row(
               children: [
-                Expanded(child:boton(texto: "7", onPressed: () => manejarBoton("7")) ),
+                Expanded(
+                  child: boton(texto: "7", onPressed: () => manejarBoton("7")),
+                ),
                 SizedBox(width: 8),
-                Expanded(child:boton(texto: "8", onPressed: () => manejarBoton("8")) ),
+                Expanded(
+                  child: boton(texto: "8", onPressed: () => manejarBoton("8")),
+                ),
                 SizedBox(width: 8),
-                Expanded(child:boton(texto: "9", onPressed: () => manejarBoton("9")) ),
+                Expanded(
+                  child: boton(texto: "9", onPressed: () => manejarBoton("9")),
+                ),
                 SizedBox(width: 8),
-                Expanded(child:boton(texto: "/", onPressed: () => manejarBoton("/")) ),
+                Expanded(
+                  child: boton(texto: "/", onPressed: () => manejarBoton("/")),
+                ),
               ],
             ),
             SizedBox(height: 20),
             Row(
               children: [
-                Expanded(child:boton(texto: "4", onPressed: () => manejarBoton("4")) ),
+                Expanded(
+                  child: boton(texto: "4", onPressed: () => manejarBoton("4")),
+                ),
                 SizedBox(width: 8),
-                Expanded(child:boton(texto: "5", onPressed: () => manejarBoton("5")) ),
+                Expanded(
+                  child: boton(texto: "5", onPressed: () => manejarBoton("5")),
+                ),
                 SizedBox(width: 8),
-                Expanded(child:boton(texto: "6", onPressed: () => manejarBoton("6")) ),
+                Expanded(
+                  child: boton(texto: "6", onPressed: () => manejarBoton("6")),
+                ),
                 SizedBox(width: 8),
-                Expanded(child:boton(texto: "*", onPressed: () => manejarBoton("*")) ),
+                Expanded(
+                  child: boton(texto: "*", onPressed: () => manejarBoton("*")),
+                ),
               ],
             ),
             SizedBox(height: 20),
             Row(
               children: [
-                Expanded(child:boton(texto: "1", onPressed: () => manejarBoton("1")) ),
+                Expanded(
+                  child: boton(texto: "1", onPressed: () => manejarBoton("1")),
+                ),
                 SizedBox(width: 8),
-                Expanded(child:boton(texto: "2", onPressed: () => manejarBoton("2")) ),
+                Expanded(
+                  child: boton(texto: "2", onPressed: () => manejarBoton("2")),
+                ),
                 SizedBox(width: 8),
-                Expanded(child:boton(texto: "3", onPressed: () => manejarBoton("3")) ),
+                Expanded(
+                  child: boton(texto: "3", onPressed: () => manejarBoton("3")),
+                ),
                 SizedBox(width: 8),
-                Expanded(child:boton(texto: "-", onPressed: () => manejarBoton("-")) ),
+                Expanded(
+                  child: boton(texto: "-", onPressed: () => manejarBoton("-")),
+                ),
               ],
             ),
             SizedBox(height: 20),
             Row(
               children: [
-                Expanded(child:boton(texto: "C", onPressed: () => manejarBoton("C")) ),
+                Expanded(
+                  child: boton(texto: "C", onPressed: () => manejarBoton("C")),
+                ),
                 SizedBox(width: 8),
-                Expanded(child:boton(texto: "0", onPressed: () => manejarBoton("0")) ),
+                Expanded(
+                  child: boton(texto: "0", onPressed: () => manejarBoton("0")),
+                ),
                 SizedBox(width: 8),
-                Expanded(child:boton(texto: "=", onPressed: () => manejarBoton("=")) ),
+                Expanded(
+                  child: boton(texto: "=", onPressed: () => manejarBoton("=")),
+                ),
                 SizedBox(width: 8),
-                Expanded(child:boton(texto: "+", onPressed: () => manejarBoton("+")) ),
+                Expanded(
+                  child: boton(texto: "+", onPressed: () => manejarBoton("+")),
+                ),
               ],
             ),
           ],
